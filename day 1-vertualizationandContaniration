@@ -1,26 +1,33 @@
-Virtualization:
-Virtualization is a technology that allows a single physical computer (server) to run multiple virtual machines (VMs) using a software layer called a hypervisor. Each virtual machine behaves like an independent computer with its own operating system, CPU, memory, and storage. This helps in better hardware utilization, isolation between systems, and running different operating systems on the same hardware.
+Virtualization
 
-Example: A single server running Windows VM, Linux VM, and Ubuntu VM simultaneously.
+Virtualization is a technology that enables a single physical computer (server) to operate multiple virtual machines (VMs) through a software layer known as a hypervisor. Each virtual machine functions as an independent system with its own operating system, processor, memory, and storage resources.
 
-Virtualization (House Example):
-Imagine a big house that represents a physical server. Inside this house, the owner divides it into separate apartments using walls. Each apartment has its own kitchen, bedroom, and bathroom, and different families live independently.
+By using virtualization, organizations can improve hardware utilization, maintain system isolation, and run different operating systems on the same physical machine.
 
-In the same way, virtualization divides one physical computer into multiple virtual machines (VMs). Each VM behaves like a separate computer with its own operating system and resources, even though all of them are running on the same physical hardware.
+Example:
+A single server can simultaneously run different virtual machines such as a Windows VM, Linux VM, and Ubuntu VM.
 
-The hypervisor acts like the manager of the house, controlling how resources such as CPU, memory, and storage are shared among the virtual machines.
+Virtualization (House Analogy)
 
-So:
+Consider a large house that represents a physical server. The owner divides this house into multiple separate apartments by building walls. Each apartment contains its own facilities such as a kitchen, bedroom, and bathroom, allowing different families to live independently.
 
-House → Physical server
+Similarly, virtualization splits one physical computer into several virtual machines (VMs). Each VM operates like a separate computer with its own operating system and allocated resources, even though all VMs share the same underlying hardware.
 
-Apartments → Virtual machines
+The hypervisor works like the house manager. It supervises and distributes system resources such as CPU, memory, and storage among the different virtual machines.
 
-House manager → Hypervisor
+Mapping of the analogy:
 
-Containerization:
-Containerization is a lightweight technology used to run applications in isolated environments called containers. Unlike virtualization, containers do not require a separate operating system for each application. Instead, they share the host operating system kernel while keeping applications and their dependencies isolated.
+House → Physical Server
 
-This makes containers faster, more portable, and more efficient compared to virtual machines.
+Apartments → Virtual Machines (VMs)
 
-Example: Using Docker containers to run multiple applications on the same system.
+House Manager → Hypervisor
+
+Containerization
+
+Containerization is a lightweight approach used to run applications in isolated environments known as containers. Unlike virtualization, containers do not require a full operating system for each application. Instead, they share the host system’s operating system kernel while still maintaining separation between applications and their dependencies.
+
+Because of this architecture, containers are generally faster, more portable, and more resource-efficient than traditional virtual machines.
+
+Example:
+Using Docker containers to run multiple applications on a single system without needing separate operating systems for each application.

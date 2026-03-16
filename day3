@@ -1,15 +1,57 @@
-.control groups for resource limits
+Control Groups (cgroups) for Resource Limits
 
-.control groups belongs to controller(giving the control) ,and it will be hlpful for sharing the resources lik network ,CPU and memory 
+Control groups (cgroups) are a Linux kernel feature used to limit, manage, and allocate system resources for processes or containers. The term control group comes from the idea of controllers that regulate how resources are used.
 
-.namespace should be isolated in the control group 
+Cgroups help in controlling and sharing important system resources such as CPU, memory, disk input/output, and network bandwidth among multiple containers or processes.
 
-.wihthout control group- one controller can consume all the resources(CPU RAM)
+Relationship Between cgroups and Namespaces
 
-.host and other containers could crash 
+In container systems, namespaces provide isolation, while cgroups provide resource control.
 
-.types of resources controlled by control groups:
-    CPU: limit cpu usage ,assign cpu shares
-    MEMORY: set max memory usage, kill container if limit exceeded
-    Disk I/O: Limit read/write speed
-    Network
+Namespaces isolate processes so containers cannot see or interact with processes in other containers.
+
+cgroups ensure that each container uses only a limited portion of system resources.
+
+Together, they enable containers to run securely and efficiently on the same host system.
+
+Importance of cgroups
+
+Without control groups, a single container or process could consume all available system resources, such as CPU or RAM.
+
+This could lead to several problems:
+
+One container may use all CPU and memory resources.
+
+Other containers may become slow or stop responding.
+
+The host system could become unstable or crash.
+
+By using cgroups, the system administrator can assign limits and fair resource distribution among containers.
+
+Types of Resources Controlled by cgroups
+
+Control groups can regulate several system resources, including:
+
+1. CPU
+
+Limits how much CPU a container can use
+
+Allows assigning CPU shares to different containers
+
+2. Memory
+
+Sets a maximum memory usage limit for a container
+
+The container can be stopped or killed if the memory limit is exceeded
+
+3. Disk I/O
+
+Controls the read and write speed of disk operations
+
+Prevents a container from overloading the storage system
+
+4. Network
+
+Can regulate network bandwidth usage
+
+Ensures fair distribution of network resources among containers
