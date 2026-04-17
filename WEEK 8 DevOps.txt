@@ -1,0 +1,165 @@
+WEEK 8: DOCKER NETWORKING, DNS, AND CONTAINER COMMUNICATION
+1. Introduction to Docker Networking
+Definition
+
+Docker networking is the system that enables communication between containers, between containers and the host, and between containers across multiple hosts.
+
+Explanation
+
+Containers are isolated by default, which means they cannot communicate with each other or external systems unless explicitly configured. Docker networking provides the mechanisms to connect containers and allow data exchange. It ensures that applications running in different containers can interact securely and efficiently.
+
+Networking is a critical component in containerized environments, especially in microservices architectures, where multiple services need to communicate with each other to function as a complete system.
+
+2. Need for Docker Networking
+Explanation
+
+In modern applications, different components such as frontend, backend, and database are often deployed in separate containers. For the application to function properly, these containers must communicate with each other.
+
+Without Docker networking:
+
+Containers remain isolated
+Services cannot communicate
+Application functionality breaks
+
+With Docker networking:
+
+Containers can communicate using IP or names
+Services are accessible across containers
+System becomes modular and scalable
+3. Types of Docker Networks
+
+Docker provides different types of network drivers to manage communication between containers.
+
+3.1 Bridge Network (Default Network)
+Definition
+
+A bridge network is the default network type in Docker that allows containers on the same host to communicate with each other.
+
+Explanation
+
+When a container is created without specifying a network, it is automatically connected to the default bridge network. Containers on the same bridge network can communicate using IP addresses. However, communication using container names is limited unless a custom bridge network is created.
+
+Bridge networks are suitable for standalone applications running on a single host.
+
+Key Points
+Default network
+Communication via IP
+Suitable for single-host environments
+Isolation from other networks
+3.2 Custom Bridge Network
+Definition
+
+A custom bridge network is a user-defined network that provides better communication features than the default bridge network.
+
+Explanation
+
+Custom bridge networks allow containers to communicate using container names instead of IP addresses. They also provide better isolation and automatic DNS resolution, making them more suitable for real-world applications.
+
+Example
+docker network create mynetwork
+
+Run containers:
+
+docker run -d --network mynetwork --name container1 nginx
+docker run -d --network mynetwork --name container2 alpine
+Benefits
+Name-based communication
+Better isolation
+Improved management
+3.3 Host Network
+Definition
+
+The host network allows a container to share the host system’s network stack.
+
+Explanation
+
+In this mode, the container does not get its own IP address. Instead, it uses the host’s IP address and network interfaces. This removes network isolation but improves performance because there is no network translation.
+
+Key Points
+No separate IP
+Uses host network directly
+High performance
+Limited isolation
+3.4 Overlay Network
+Definition
+
+An overlay network is a network that connects containers across multiple Docker hosts.
+
+Explanation
+
+Overlay networks are used in distributed systems and container orchestration platforms such as Docker Swarm. They allow containers running on different machines to communicate as if they were on the same network.
+
+Key Points
+Multi-host communication
+Used in clustered environments
+Enables distributed applications
+4. Container Communication
+Explanation
+
+Containers can communicate with each other in different ways depending on the network configuration. In bridge networks, containers typically communicate using IP addresses. In custom networks, they can communicate using container names.
+
+Communication is essential in applications where different services interact, such as a web server connecting to a database.
+
+5. DNS in Docker
+Definition
+
+Docker provides a built-in DNS system that allows containers to resolve each other using names instead of IP addresses.
+
+Explanation
+
+In user-defined networks, Docker automatically assigns DNS entries to containers. This allows containers to communicate using their names, simplifying networking and reducing dependency on IP addresses.
+
+Example
+
+If two containers are connected to the same network:
+
+Container name: backend
+Another container can access it using: backend
+Importance
+Simplifies communication
+Avoids manual IP management
+Improves flexibility
+6. Linking Containers (Legacy Method)
+Definition
+
+Linking containers is an older method used to connect containers using the --link option.
+
+Explanation
+
+Before custom networks were introduced, Docker used linking to enable communication between containers. This method is now deprecated and replaced by user-defined networks.
+
+Example
+docker run -d --name db nginx
+docker run -it --name app --link db:database alpine
+Limitation
+Limited functionality
+Not scalable
+Deprecated in modern Docker usage
+7. Network Commands
+docker network ls
+
+Lists all available networks
+
+docker network create
+
+Creates a new network
+
+docker network inspect
+
+Displays details about a network
+
+docker network rm
+
+Removes a network
+
+8. Real-World Example
+Scenario
+
+A web application consists of:
+
+Frontend container
+Backend container
+Database container
+Explanation
+
+All containers are connected to the same network. The frontend communicates with the backend using its container name, and the backend communicates with the database in the same way. This setup allows seamless communication between services.

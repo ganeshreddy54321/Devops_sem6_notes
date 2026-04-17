@@ -1,0 +1,193 @@
+WEEK 6: DOCKER RUN OPTIONS, ENVIRONMENT VARIABLES, AND PORT MAPPING
+1. Docker Run Command
+Definition
+
+The docker run command is used to create and start a container from a Docker image.
+
+Explanation
+
+The docker run command is one of the most important and frequently used commands in Docker. It performs multiple operations in a single step, including pulling the image (if not available locally), creating a container, and starting it. It also allows users to configure how the container behaves using various options.
+
+The general syntax of the command is:
+
+docker run [OPTIONS] IMAGE [COMMAND] [ARG...]
+
+Here, the options define how the container should run, the image specifies the base for the container, and the optional command overrides the default command defined in the image.
+
+2. Important Docker Run Options
+2.1 Interactive Mode (-it)
+Definition
+
+The -it option runs a container in interactive mode with a terminal.
+
+Explanation
+
+This option combines two flags: -i (interactive) and -t (terminal). It allows the user to interact with the container through a command-line interface. This is commonly used for debugging or running commands inside the container.
+
+Example
+docker run -it ubuntu /bin/bash
+
+This command opens a terminal inside the Ubuntu container.
+
+2.2 Detached Mode (-d)
+Definition
+
+The -d option runs a container in the background.
+
+Explanation
+
+When a container is run in detached mode, it executes in the background and does not occupy the terminal. This is useful for running services such as web servers or databases.
+
+Example
+docker run -d nginx
+2.3 Naming a Container (--name)
+Definition
+
+The --name option assigns a custom name to a container.
+
+Explanation
+
+By default, Docker assigns random names to containers. Using the --name option makes it easier to identify and manage containers.
+
+Example
+docker run --name mycontainer nginx
+2.4 Automatic Removal (--rm)
+Definition
+
+The --rm option automatically removes the container after it stops.
+
+Explanation
+
+This is useful for temporary containers where data persistence is not required. It helps in maintaining a clean system by removing unused containers.
+
+2.5 Port Mapping (-p)
+Definition
+
+The -p option maps a port on the host system to a port inside the container.
+
+Explanation
+
+Containers run in an isolated environment, so applications inside them are not accessible from outside by default. Port mapping allows external users to access services running inside a container by linking a host port to a container port.
+
+Syntax
+docker run -p <host_port>:<container_port> IMAGE
+Example
+docker run -p 8080:80 nginx
+
+This maps port 8080 on the host to port 80 inside the container.
+
+Internal Flow
+Browser request → Host port
+Host port → Docker
+Docker → Container port
+Container → Application
+2.6 Environment Variables (-e)
+Definition
+
+The -e option is used to set environment variables inside a container.
+
+Explanation
+
+Environment variables are key-value pairs that allow configuration of applications without modifying the image. They are widely used to pass configuration data such as database credentials, ports, and environment modes.
+
+Example
+docker run -e MY_VAR=value nginx
+Importance
+Avoids hardcoding configuration
+Enables dynamic behavior
+Improves flexibility
+Used in cloud and microservices environments
+2.7 Volume Mounting (-v)
+Definition
+
+The -v option is used to mount a directory or volume from the host system into the container.
+
+Explanation
+
+This allows data to persist even after the container is removed. It also enables sharing of files between the host and the container.
+
+Example
+docker run -v mydata:/app/data ubuntu
+3. Environment Variables in Detail
+Definition
+
+Environment variables are dynamic values used by applications to configure their behavior at runtime.
+
+Explanation
+
+Instead of embedding configuration directly into the application or image, environment variables allow developers to change settings without rebuilding the image. This makes applications more flexible and easier to manage.
+
+Uses of Environment Variables
+Store configuration values
+Manage application settings
+Store sensitive data (like passwords)
+Control runtime behavior
+Example Scenario
+
+A database container requires:
+
+Username
+Password
+Database name
+
+These values can be passed using environment variables instead of modifying the image.
+
+Multiple Environment Variables
+
+You can pass multiple variables in one command:
+
+docker run -e APP_ENV=production -e APP_VERSION=1.0 nginx
+Using Environment File
+
+Instead of passing variables individually, they can be stored in a file:
+
+Example .env file:
+
+DB_HOST=localhost
+DB_USER=root
+DB_PASS=secret
+
+Run container:
+
+docker run --env-file .env myapp
+Key Concept
+
+Environment variables are created inside the container and do not affect the host system.
+
+4. Port Mapping in Detail
+Definition
+
+Port mapping is the process of exposing a container’s internal port to the host system.
+
+Explanation
+
+By default, containers are isolated and their services are not accessible externally. Port mapping bridges this gap by allowing external traffic to reach the application inside the container.
+
+Without Port Mapping
+docker run nginx
+
+Result:
+
+Container runs
+Application is not accessible from browser
+With Port Mapping
+docker run -p 8080:80 nginx
+
+Result:
+
+Application accessible at localhost:8080
+Important Points
+Host port can be different from container port
+Required for web applications
+Essential for exposing services
+5. Combined Example
+
+Running a container with multiple options:
+
+docker run -dit --name myapp -p 8080:80 -e ENV=production nginx
+Explanation
+-d runs in background
+-it allows interaction
+--name assigns name
+-p exposes port
+-e sets environment variable

@@ -1,0 +1,173 @@
+WEEK 7: CONTAINER INTERACTION AND DOCKER VOLUMES
+1. Container Interaction
+Definition
+
+Container interaction refers to the process of accessing, monitoring, and managing a running container to execute commands, inspect its state, and debug applications.
+
+Explanation
+
+When a container is running, it operates in an isolated environment. However, developers and system administrators often need to interact with it to perform tasks such as debugging, checking logs, monitoring performance, or modifying files. Docker provides several commands that allow users to enter a container, execute commands inside it, and retrieve information about its state.
+
+Container interaction is essential for troubleshooting and maintaining applications in real-world environments. It helps in understanding how the application behaves inside the container and allows administrators to take corrective actions when needed.
+
+2. Accessing a Running Container
+docker exec
+Definition
+
+The docker exec command is used to run a command inside a running container.
+
+Explanation
+
+This command allows users to access the internal environment of a container without stopping it. It is commonly used to open a shell inside the container or execute specific commands.
+
+Example
+docker exec -it <container_id> bash
+
+This command opens a terminal inside the running container, allowing direct interaction.
+
+3. Monitoring Containers
+docker logs
+Definition
+
+The docker logs command is used to view the output logs of a container.
+
+Explanation
+
+Logs provide information about the application’s execution, including errors, warnings, and normal output. This is useful for debugging and monitoring application behavior.
+
+Example
+docker logs <container_id>
+docker top
+Definition
+
+The docker top command displays the running processes inside a container.
+
+Explanation
+
+This command helps in understanding which processes are active within the container and how they are behaving.
+
+docker stats
+Definition
+
+The docker stats command shows real-time resource usage of containers.
+
+Explanation
+
+It provides metrics such as CPU usage, memory usage, and network I/O, which are useful for performance monitoring.
+
+4. Inspecting Containers
+docker inspect
+Definition
+
+The docker inspect command provides detailed information about a container in JSON format.
+
+Explanation
+
+This command reveals configuration details such as network settings, volume mounts, environment variables, and resource limits. It is useful for debugging and understanding container configuration.
+
+5. Importance of Container Interaction
+
+Container interaction is important because it allows:
+
+Debugging of applications
+Monitoring system performance
+Access to container environment
+Verification of configurations
+Troubleshooting errors
+6. Docker Volumes
+Definition
+
+A Docker volume is a storage mechanism that allows data to persist independently of containers.
+
+Explanation
+
+By default, any data created inside a container is lost when the container is removed. This is because containers are ephemeral in nature. Docker volumes solve this problem by providing persistent storage that exists outside the container’s lifecycle.
+
+Volumes are managed by Docker and can be attached to one or more containers. They ensure that important data is not lost when containers are stopped or deleted.
+
+7. Need for Docker Volumes
+Explanation
+
+Containers are designed to be temporary, and their internal storage is not permanent. In real-world applications, data such as databases, logs, and user files must be preserved even after the container is removed.
+
+Without volumes:
+
+Data is lost when container is deleted
+Applications cannot store persistent data
+
+With volumes:
+
+Data persists across container restarts
+Multiple containers can share data
+Backup and restore become easier
+8. Volume Commands
+docker volume create
+
+Definition:
+Creates a new Docker volume.
+
+Example
+docker volume create myvolume
+docker volume ls
+
+Definition:
+Lists all available volumes.
+
+docker volume inspect
+
+Definition:
+Displays detailed information about a volume.
+
+docker volume rm
+
+Definition:
+Removes a Docker volume.
+
+9. Using Volumes with Containers
+Definition
+
+Volumes can be attached to containers using the -v option in the docker run command.
+
+Explanation
+
+When a volume is mounted, the specified directory inside the container is linked to the volume. Any data written to this directory is stored in the volume and persists even if the container is deleted.
+
+Example
+docker run -d -v myvolume:/app/data ubuntu
+Explanation
+myvolume is the Docker volume
+/app/data is the directory inside the container
+
+Any data written to /app/data will be stored in the volume.
+
+10. Data Persistence
+Explanation
+
+Data persistence means that data remains available even after the container is stopped or removed. Volumes provide this capability by storing data outside the container.
+
+Example Scenario
+Create a volume
+Run a container and store data in the volume
+Remove the container
+Run a new container with the same volume
+
+Result:
+
+Data remains unchanged
+11. Bind Mounts
+Definition
+
+A bind mount is a type of storage where a directory from the host system is directly mounted into a container.
+
+Explanation
+
+Unlike volumes, which are managed by Docker, bind mounts use specific directories from the host system. This is commonly used in development environments where developers need to edit files on the host and see changes reflected inside the container.
+
+Example
+docker run -v /host/path:/container/path ubuntu
+12. Volume vs Bind Mount
+Feature	Volume	Bind Mount
+Managed by Docker	Yes	No
+Use case	Production	Development
+Host dependency	No	Yes
+Data location	Docker-managed	Host directory

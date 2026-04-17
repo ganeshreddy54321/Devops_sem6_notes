@@ -1,0 +1,165 @@
+WEEK 9: ADVANCED DOCKER CONCEPTS, IMAGE CREATION, AND REGISTRIES
+1. Introduction to Advanced Docker Concepts
+Explanation
+
+After understanding basic Docker operations such as running containers, managing volumes, and networking, the next step is to understand how Docker images are actually built, how data is stored internally, and how images are shared securely across systems. These advanced concepts include image creation using Dockerfiles, the copy-on-write mechanism, and container registries.
+
+These concepts are essential for real-world DevOps workflows, where applications are not just run but also built, versioned, and deployed across distributed environments.
+
+2. Image Creation using Dockerfile
+Definition
+
+A Dockerfile is a text file that contains a set of instructions used to automatically build a Docker image.
+
+Explanation
+
+Instead of manually configuring a container every time, Docker allows developers to define the entire environment using a Dockerfile. This file contains step-by-step instructions such as selecting a base image, copying files, installing dependencies, and defining how the application should run.
+
+When the Dockerfile is executed, Docker builds an image by processing each instruction and creating layers. This ensures consistency, repeatability, and automation in application deployment.
+
+Common Instructions in Dockerfile
+FROM
+
+Specifies the base image for the container.
+
+Example:
+
+FROM nginx:alpine
+WORKDIR
+
+Sets the working directory inside the container.
+
+COPY
+
+Copies files from the host system to the container.
+
+RUN
+
+Executes commands during image build (e.g., installing packages).
+
+EXPOSE
+
+Defines the port on which the application will run.
+
+CMD
+
+Specifies the default command to run when the container starts.
+
+Example Dockerfile
+FROM nginx:alpine
+COPY index.html /usr/share/nginx/html/index.html
+EXPOSE 80
+Explanation
+Uses a lightweight Nginx base image
+Copies a webpage into the container
+Exposes port 80 for web access
+Building an Image
+Definition
+
+The process of converting a Dockerfile into an image.
+
+Command
+docker build -t myapp:v1 .
+Explanation
+-t assigns a name and tag
+. indicates current directory
+Running the Image
+docker run -d -p 8080:80 myapp:v1
+3. Copy-on-Write (CoW) Mechanism
+Definition
+
+Copy-on-Write is a storage mechanism in Docker where changes made by a container are stored in a separate writable layer without modifying the original image layers.
+
+Explanation
+
+Docker images are made up of multiple read-only layers. When a container is created, a new writable layer is added on top of these layers. Any changes made during container execution are written only to this top layer.
+
+If a file from a lower layer is modified, it is first copied into the writable layer and then modified. This ensures that the original image remains unchanged.
+
+Key Concepts
+Base image layers are read-only
+Container layer is writable
+Changes are isolated from image
+Benefits of Copy-on-Write
+Efficient storage usage
+Faster container creation
+Image integrity is preserved
+Multiple containers can share same image
+4. Docker Registries
+Definition
+
+A Docker registry is a storage and distribution system used to store and share Docker images.
+
+Explanation
+
+Registries allow users to push images from their local system and pull them on other systems. This is essential for sharing applications across teams and deploying them in different environments.
+
+5. Types of Docker Registries
+5.1 Docker Hub
+Definition
+
+Docker Hub is the default public registry for Docker images.
+
+Explanation
+
+It provides:
+
+Public repositories
+Official images
+Private repositories
+5.2 GitHub Container Registry (GHCR)
+Definition
+
+A registry service provided by GitHub for storing container images.
+
+5.3 Private Registry
+Definition
+
+A self-hosted or enterprise-level registry used for storing private images.
+
+Explanation
+
+Organizations use private registries to store sensitive or proprietary applications securely.
+
+Example
+docker run -d -p 5000:5000 --name registry registry:2
+6. Image Tagging and Pushing
+Tagging an Image
+Definition
+
+Tagging assigns a new name to an image for uploading to a registry.
+
+Command
+docker tag nginx username/myimage:latest
+Pushing an Image
+Definition
+
+Uploading an image to a registry.
+
+Command
+docker push username/myimage:latest
+Pulling an Image
+Definition
+
+Downloading an image from a registry.
+
+Command
+docker pull nginx
+7. Authentication and Access Control
+Explanation
+
+To push images to registries, users must authenticate themselves. Instead of using passwords, access tokens are commonly used for security.
+
+Example
+docker login
+8. Real-World Application Example
+Scenario
+
+A complete application consists of:
+
+Database container
+Backend container
+Frontend container
+Explanation
+
+Each service is containerized and connected via networks and volumes. Images are built using Dockerfiles and stored in registries. Containers are deployed using these images, ensuring consistency across environments.

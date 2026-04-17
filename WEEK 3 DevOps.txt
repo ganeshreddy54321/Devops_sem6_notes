@@ -1,0 +1,169 @@
+WEEK 3: PROCESS ISOLATION, NAMESPACES, AND CGROUPS
+1. Process Isolation
+Definition
+
+Process isolation is a mechanism that ensures each container runs independently as if it is the only process on the system, even though multiple containers share the same operating system.
+
+Explanation
+
+In a normal operating system, all processes can potentially interact with each other, which may lead to conflicts or security issues. In containerized environments, multiple applications run on the same host system. Therefore, it is essential to isolate processes so that one container cannot interfere with another.
+
+Process isolation creates the illusion that each container has its own dedicated system. Even though containers share the same OS kernel, they behave as independent environments. This isolation is achieved using Linux kernel features called namespaces, which restrict what a container can see and access.
+
+Importance of Process Isolation
+Prevents interference between containers
+Improves security
+Ensures stability of applications
+Allows multiple applications to run safely on the same system
+2. Namespaces
+Definition
+
+Namespaces are Linux kernel features that provide isolation by partitioning system resources so that each container only sees its own resources.
+
+Explanation
+
+Namespaces work by creating separate views of system resources for different processes. Each container is assigned its own set of namespaces, which restrict its visibility to only its own processes, files, and network interfaces. As a result, a container behaves as if it is running on a separate machine, even though it is sharing the host system.
+
+In simple terms, namespaces create isolated environments within a single operating system.
+
+Key Concept
+
+“Namespaces create isolation by hiding system resources from other containers.”
+
+3. Types of Namespaces
+3.1 PID Namespace (Process Isolation)
+
+Definition:
+The PID namespace isolates process IDs so that each container has its own process tree.
+
+Explanation:
+Inside a container, processes are assigned their own IDs starting from 1. These processes are not visible outside the container, and the container cannot see processes running on the host or in other containers.
+
+Example:
+A web server container may have:
+
+PID 1 → main application
+Worker processes → handle requests
+Logger process → manage logs
+
+These processes are only visible within the container.
+
+3.2 Network Namespace
+
+Definition:
+The network namespace provides each container with its own network stack.
+
+Explanation:
+Each container gets its own:
+
+IP address
+Network interfaces
+Port space
+
+This allows multiple containers to run applications on the same port without conflict.
+
+Example:
+Multiple containers can run web servers on port 80:
+
+Container 1 → 172.x.x.x:80
+Container 2 → 172.x.x.x:80
+3.3 Mount Namespace
+
+Definition:
+The mount namespace isolates the file system of each container.
+
+Explanation:
+Each container has its own view of the file system. Changes made inside a container do not affect the host system or other containers.
+
+3.4 UTS Namespace
+
+Definition:
+The UTS namespace allows each container to have its own hostname and domain name.
+
+Explanation:
+This helps in identifying containers independently, especially in distributed systems.
+
+3.5 User Namespace
+
+Definition:
+The user namespace maps container users to different users on the host system.
+
+Explanation:
+It enhances security by preventing containers from running as root users on the host system, even if they appear as root inside the container.
+
+4. Summary of Namespaces
+Namespace	Purpose
+PID	Process isolation
+Network	Separate networking
+Mount	File system isolation
+UTS	Hostname isolation
+User	Security and user mapping
+5. Control Groups (cgroups)
+Definition
+
+Control Groups (cgroups) are Linux kernel features used to limit, control, and monitor the resource usage of processes or containers.
+
+Explanation
+
+While namespaces provide isolation, they do not control how much resource a container can use. Without proper control, one container could consume excessive CPU or memory, affecting other containers and the host system.
+
+cgroups solve this problem by enforcing limits on resource usage. They ensure fair distribution of system resources and prevent any single container from overwhelming the system.
+
+Key Concept
+
+“Namespaces isolate resources, cgroups control resource usage.”
+
+6. Need for cgroups
+Explanation
+
+In a multi-container environment:
+
+Multiple applications share the same system
+Some applications may consume more resources
+
+Without cgroups:
+
+One container could use all CPU or memory
+Other containers may crash
+System performance degrades
+With cgroups:
+Resource limits are enforced
+System remains stable
+Fair resource sharing is ensured
+7. Types of Resources Controlled by cgroups
+1. CPU
+
+Limits how much CPU a container can use and assigns CPU shares.
+
+2. Memory
+
+Sets maximum memory usage and can terminate containers if limits are exceeded.
+
+3. Disk I/O
+
+Controls read and write speeds to prevent excessive disk usage.
+
+4. Network (Indirect Control)
+
+Managed through traffic shaping mechanisms.
+
+8. Working of cgroups
+Explanation
+
+cgroups organize processes into groups and apply limits to each group. When a container is created, it is assigned to a specific cgroup, which defines how much CPU, memory, and other resources it can use.
+
+The system continuously monitors resource usage and ensures that containers do not exceed their allocated limits.
+
+9. Namespaces vs cgroups
+Feature	Namespaces	cgroups
+Purpose	Isolation	Resource control
+Function	Hide resources	Limit usage
+Focus	Visibility	Allocation
+10. Real-World Analogy
+Namespaces
+
+Like separate rooms in a building where people cannot see each other.
+
+cgroups
+
+Like electricity meters that limit how much power each room can use.
