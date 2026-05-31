@@ -1,0 +1,132 @@
+Continuous Integration with GitHub Actions
+1. Continuous Integration (CI)
+
+Continuous Integration is a practice where code changes are automatically built and tested whenever developers push code to a repository.
+
+Advantages
+Early bug detection
+Faster feedback
+Better software quality
+2. Workflow Automation
+
+GitHub Actions automates:
+
+Build
+Testing
+Deployment
+
+Workflow files are stored in:
+
+.github/workflows
+3. Key Components
+Workflow
+
+Automation file written in YAML.
+
+Job
+
+Collection of steps.
+
+Step
+
+Single command executed by runner.
+
+Action
+
+Reusable automation component.
+
+Runner
+
+Machine that executes workflow.
+
+4. Workflow Triggers
+Push Trigger
+on: push
+Pull Request Trigger
+on: pull_request
+Schedule Trigger
+
+Runs at fixed times.
+
+Manual Trigger
+workflow_dispatch
+5. Jobs and Matrix Strategies
+
+Matrix strategy allows testing on multiple environments.
+
+Example:
+
+Java 17
+Java 21
+6. Steps and Shell Commands
+
+Example:
+
+steps:
+  - run: mvn test
+7. Marketplace Actions
+
+Pre-built actions available from GitHub Marketplace.
+
+Example:
+
+actions/checkout
+8. Language Specific Actions
+
+Examples:
+
+setup-java
+setup-node
+setup-python
+9. Using Cache
+
+Stores dependencies to speed up builds.
+
+Benefits:
+
+Faster execution
+Less downloading
+10. Multi Job Workflow
+
+Example Flow:
+
+Build
+ ↓
+Test
+ ↓
+Deploy
+11. GitHub Hosted Runners
+
+Provided by GitHub.
+
+Examples:
+
+Ubuntu
+Windows
+macOS
+12. Self Hosted Runners
+
+Installed on organization’s own systems.
+
+Advantages:
+
+Full control
+Custom hardware
+13. Runner Security
+
+Best Practices:
+
+Use secrets
+Restrict permissions
+Regular updates
+14. Docker and GitHub Actions
+
+Build Image:
+
+docker build -t myapp .
+
+Push Image:
+
+docker push username/myapp
+
+Deploy application automatically through workflows.

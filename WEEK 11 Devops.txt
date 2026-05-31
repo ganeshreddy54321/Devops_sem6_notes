@@ -1,0 +1,116 @@
+Advanced Maven & Docker Integration
+1. Parent POM
+
+Parent POM is used to share common configuration among multiple Maven projects.
+
+Advantages
+Avoids duplicate code
+Centralized dependency management
+Easy maintenance
+2. Dependency Scope
+Compile Scope
+
+Default scope.
+
+Available throughout project lifecycle.
+
+Provided Scope
+
+Available during compilation but not included in package.
+
+Runtime Scope
+
+Required only during execution.
+
+Test Scope
+
+Used only for testing.
+
+3. Transitive Dependencies
+
+When a dependency requires another dependency, Maven automatically downloads it.
+
+Example:
+
+Project
+  ↓
+Spring Boot
+  ↓
+Logback
+
+Maven downloads Logback automatically.
+
+4. Version Conflicts and Resolution
+
+Different libraries may require different versions of the same dependency.
+
+Maven resolves conflicts using the nearest dependency rule.
+
+5. Dependency Management
+
+Used to define dependency versions in a central location.
+
+Benefits
+Consistent versions
+Easier upgrades
+Reduced conflicts
+6. Maven Plugins
+
+Plugins add additional functionality to Maven.
+
+Compiler Plugin
+
+Compiles source code.
+
+Surefire Plugin
+
+Executes unit tests.
+
+Shade Plugin
+
+Creates Uber JAR containing application and dependencies.
+
+7. Maven Wrapper (mvnw)
+
+Ensures all developers use the same Maven version.
+
+Files:
+
+mvnw
+mvnw.cmd
+.mvn
+
+Command:
+
+./mvnw clean install
+8. Maven and Docker Integration
+
+Docker packages applications into containers.
+
+Dockerfile Example
+FROM openjdk:17
+
+COPY target/app.jar app.jar
+
+ENTRYPOINT ["java","-jar","app.jar"]
+9. Dockerizing Maven Applications
+Step 1
+
+Build JAR
+
+mvn package
+Step 2
+
+Create Docker Image
+
+docker build -t myapp .
+Step 3
+
+Run Container
+
+docker run myapp
+10. Pushing Artifacts to Registries
+Docker Hub
+docker push username/myapp
+GitHub Container Registry (GHCR)
+docker push ghcr.io/user/myapp

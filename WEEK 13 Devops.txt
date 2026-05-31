@@ -1,0 +1,198 @@
+Jenkins CI/CD
+1. Jenkins Introduction
+
+Jenkins is an open-source automation server used for Continuous Integration and Continuous Deployment (CI/CD).
+
+Features
+Automated builds
+Automated testing
+Continuous deployment
+Plugin support
+2. Jenkins Architecture
+Master
+
+Controls Jenkins operations.
+
+Agent
+
+Executes build jobs.
+
+Master
+  │
+Agents
+3. Installation and User Interface
+
+Main Components:
+
+Dashboard
+Build History
+Jobs
+Plugin Manager
+4. Plugin Management
+
+Popular Plugins:
+
+Git Plugin
+Maven Plugin
+Docker Plugin
+5. Security, Users and Roles
+
+Security Features:
+
+Authentication
+Authorization
+Role-based access control
+6. Jenkins Pipelines
+
+Pipeline defines CI/CD process as code.
+
+Types
+Freestyle Jobs
+
+Configured using GUI.
+
+Pipeline Jobs
+
+Configured using Jenkinsfile.
+
+7. Declarative Pipeline Syntax
+pipeline {
+ agent any
+
+ stages {
+ }
+}
+8. Scripted Pipeline Syntax
+
+Uses Groovy programming language and offers greater flexibility.
+
+9. Jenkinsfile Structure
+
+Components:
+
+Agent
+Stages
+Steps
+Post Actions
+10. Parameters and Environment Variables
+
+Parameters allow user input.
+
+Environment variables store reusable values.
+
+11. Multi-Branch Pipelines
+
+Automatically creates pipelines for different Git branches.
+
+Benefits:
+
+Branch-specific builds
+Better code management
+12. Pipeline Stages
+Checkout
+
+Downloads source code from GitHub.
+
+Build
+
+Compiles application.
+
+Test
+
+Runs test cases.
+
+Package
+
+Creates JAR/WAR.
+
+Post Actions
+
+Runs after build completion.
+
+13. Managing Artifacts
+
+Artifacts include:
+
+JAR files
+WAR files
+Reports
+
+Stored for future reference.
+
+14. Docker and Jenkins Integration
+
+Build Docker Image:
+
+docker build -t myapp .
+
+Push Docker Image:
+
+docker push username/myapp
+15. Jenkins and GitHub Integration
+
+Methods:
+
+Webhooks
+Poll SCM
+
+Webhook is preferred because it triggers builds immediately.
+
+16. Backup and Restore
+
+Used to protect:
+
+Jobs
+Build history
+Configurations
+17. Jenkins and Maven
+
+Configure Maven in:
+
+Manage Jenkins
+→ Global Tool Configuration
+
+Build Command:
+
+mvn clean install
+18. Code Coverage and Test Reports
+
+Tools:
+
+JUnit
+JaCoCo
+
+Used to analyze testing quality.
+
+19. Jenkins CI/CD Deployment Flow
+Developer
+   ↓
+GitHub
+   ↓
+Jenkins
+   ↓
+Build
+   ↓
+Test
+   ↓
+Docker Image
+   ↓
+Registry
+   ↓
+Deployment
+20. Build Triggers
+Poll SCM
+
+Checks repository periodically.
+
+Webhook
+
+Triggers build immediately after code push.
+
+21. Jenkins Agents
+
+Types:
+
+SSH Agent
+SFTP Agent
+Docker Agent
+Container Agent
