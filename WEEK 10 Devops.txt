@@ -1,0 +1,96 @@
+Maven Build Automation – Basics
+1. Why Build Tools Exist?
+
+In software development, developers perform many repetitive tasks such as compiling code, running tests, creating JAR files, and deploying applications. Doing these tasks manually is time-consuming and may lead to errors. Build tools automate these tasks and improve productivity.
+
+Benefits
+Saves time
+Reduces human errors
+Improves consistency
+Automates testing and deployment
+2. Problems Solved by Automated Builds
+
+Before build tools:
+
+Manual compilation
+Difficult dependency management
+Inconsistent project structures
+Deployment mistakes
+
+After build tools:
+
+One-command build
+Automatic dependency download
+Standardized project structure
+Reliable deployments
+3. Maven
+
+Maven is an open-source build automation and project management tool mainly used for Java projects.
+
+Features
+Dependency management
+Build automation
+Plugin support
+Standard directory structure
+4. Project Object Model (POM)
+
+POM stands for Project Object Model.
+
+Maven uses a file called pom.xml to store project information.
+
+Contains
+Project name
+Version
+Dependencies
+Plugins
+Build configuration
+5. Maven Directory Structure
+project
+│
+├── src
+│   ├── main
+│   │   └── java
+│   └── test
+│       └── java
+│
+└── pom.xml
+Purpose
+src/main/java → Source code
+src/test/java → Test code
+pom.xml → Maven configuration
+6. Maven Build Lifecycle
+Validate
+
+Checks project correctness.
+
+mvn validate
+Compile
+
+Compiles Java code.
+
+mvn compile
+Test
+
+Runs test cases.
+
+mvn test
+Package
+
+Creates JAR/WAR file.
+
+mvn package
+Verify
+
+Runs additional quality checks.
+
+mvn verify
+Install
+
+Stores artifact in local repository.
+
+mvn install
+Deploy
+
+Uploads artifact to remote repository.
+
+mvn deploy
